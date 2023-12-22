@@ -1,40 +1,48 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TechcareerWebApiTutorial.Controllers
+namespace TechCareerWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CountriesController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<string>> GetCountries()
+        public string[] Get()
         {
-            List<string> countries = new List<string>
-            {
-                "Ulke1","Ulke2","Ulke3","Ulke4","Ulke5","Ulke6","Ulke7","Ulke8","Ulke9","Ulke10","Ulke11","Ulk12","Ulke13","Ulke14","Ulke15","Ulke16","Ulke17",
-                "Ulke18","Ulke10","Ulke20"
+            string[] countries = new string[] {
+
+                "Türkiye", "America", "United Kingdom", "Germany", "France", "Holland", "Spain", "Australia", "Russian", "China", "Japan",
+                "Norway", "Brazil", "South Africa", "Argentina", "Mexico", "South Korea", "Canada", "India", "Belgium"
             };
-            return Ok(countries);
+            return countries;
         }
-
-        private List<string> allCountries = new List<string>
-    {
-        "Ulke1","Ulke2","Ulke3","Ulke4","Ulke5","Ulke6","Ulke7","Ulke8","Ulke9","Ulke10","Ulke11","Ulk12","Ulke13","Ulke14","Ulke15","Ulke16","Ulke17",
-                "Ulke18","Ulke10","Ulke20"
-    };
-
-        [HttpGet("{count}")]
-        public ActionResult<IEnumerable<string>> GetCountries(int counter)
+        [HttpGet("{id}")]
+        public string Get(int id)
         {
-            if (counter <= 0 || counter > allCountries.Count)
+            string[] countries = new string[] {
+
+                "Türkiye", "America", "United Kingdom", "Germany", "France", "Holland", "Spain", "Australia", "Russian", "China", "Japan",
+                "Norway", "Brazil", "South Africa", "Argentina", "Mexico", "South Korea", "Canada", "India", "Belgium"
+            };
+
+            string result = "";
+
+            if (id < 0 || id >= countries.Length)
             {
-                return BadRequest("Sayı geçersiz!!");
+                return "Invalid ID";
+            }
+            else
+            {
+                for (int i = 0; i < id; i++)
+                {
+                    result += countries[i] + "\n";
+                }
+
             }
 
-            List<string> selectCountries = allCountries.TakeLast(counter).ToList();
-
-            return Ok(selectCountries);
+            return result;
         }
+
     }
 }
